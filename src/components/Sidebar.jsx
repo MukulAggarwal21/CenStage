@@ -1,4 +1,3 @@
-// src/components/Sidebar.jsx
 import React from 'react';
 import { useSelector } from 'react-redux';
 import '../styles/Sidebar.css';
