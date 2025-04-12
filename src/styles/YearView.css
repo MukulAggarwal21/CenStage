@@ -1,0 +1,62 @@
+
+.year-view {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Full viewport height */
+  overflow-y: auto; /* Enable scrolling */
+}
+
+.year-navigation {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  position: sticky; /* Make it sticky */
+  top: 0; /* Stick to the top of the viewport */
+  z-index: 10; /* Ensure it stays above other content */
+  background-color: #fff; /* Add background to avoid overlap */
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.month-nav-button {
+  margin: 5px;
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+.month-nav-button:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.year-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 10px; /* Add padding for better spacing */
+}
+
+.month-container {
+  border: 1px solid #ddd;
+  padding: 10px;
+  background-color: #f9f9f9;
+  scroll-margin-top: 80px; /* Ensure proper alignment when scrolling */
+}
+
+
+.today-button {
+  margin: 5px;
+  padding: 5px 10px;
+  border: 1px solid #007bff;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.today-button:hover {
+  background-color: #0056b3;
+}

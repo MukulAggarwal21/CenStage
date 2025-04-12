@@ -1,10 +1,13 @@
+
+
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { fetchGoals, fetchTasks, fetchEvents } from '../redux/actions';
 import Sidebar from './Sidebar';
 import WeekView from './WeekView';
+import MonthView from './MonthView';
+import YearView from './YearView';
 import EventModal from './EventModal';
-// import '../styles/Calendar.css';
 import '../styles/Calendar.css';
 
 const Calendar = () => {
@@ -14,42 +17,47 @@ const Calendar = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [selectedGoal, setSelectedGoal] = useState(null);
-  
+  const [view, setView] = useState('week'); // Default to week view
+
   useEffect(() => {
-    // Fetch initial data from API
     dispatch(fetchGoals());
     dispatch(fetchEvents(getWeekBounds(currentDate)));
   }, [dispatch]);
-
-  // When a goal is selected, fetch its related tasks
-  useEffect(() => {
-    if (selectedGoal) {
-      dispatch(fetchTasks(selectedGoal.id));
-    }
-  }, [selectedGoal, dispatch]);
 
   const getWeekBounds = (date) => {
     const startOfWeek = new Date(date);
     startOfWeek.setDate(date.getDate() - date.getDay() + (date.getDay() === 0 ? -6 : 1));
     startOfWeek.setHours(0, 0, 0, 0);
-    
+
     const endOfWeek = new Date(startOfWeek);
     endOfWeek.setDate(startOfWeek.getDate() + 6);
     endOfWeek.setHours(23, 59, 59, 999);
-    
+
     return { start: startOfWeek, end: endOfWeek };
   };
 
-  const handlePrevWeek = () => {
+  const handlePrev = () => {
     const newDate = new Date(currentDate);
-    newDate.setDate(currentDate.getDate() - 7);
+    if (view === 'week') {
+      newDate.setDate(currentDate.getDate() - 7);
+    } else if (view === 'month') {
+      newDate.setMonth(currentDate.getMonth() - 1);
+    } else if (view === 'year') {
+      newDate.setFullYear(currentDate.getFullYear() - 1);
+    }
     setCurrentDate(newDate);
     dispatch(fetchEvents(getWeekBounds(newDate)));
   };
 
-  const handleNextWeek = () => {
+  const handleNext = () => {
     const newDate = new Date(currentDate);
-    newDate.setDate(currentDate.getDate() + 7);
+    if (view === 'week') {
+      newDate.setDate(currentDate.getDate() + 7);
+    } else if (view === 'month') {
+      newDate.setMonth(currentDate.getMonth() + 1);
+    } else if (view === 'year') {
+      newDate.setFullYear(currentDate.getFullYear() + 1);
+    }
     setCurrentDate(newDate);
     dispatch(fetchEvents(getWeekBounds(newDate)));
   };
@@ -60,8 +68,8 @@ const Calendar = () => {
     dispatch(fetchEvents(getWeekBounds(today)));
   };
 
-  const handleTimeSlotClick = (time) => {
-    setSelectedEvent(null);
+  const handleTimeSlotClick = (time, preFilledEvent = null) => {
+    setSelectedEvent(preFilledEvent);
     setSelectedTime(time);
     setShowModal(true);
   };
@@ -82,16 +90,11 @@ const Calendar = () => {
     setSelectedGoal(goal);
   };
 
-  const handleTaskDragStart = (task) => {
-    // Implement drag functionality
-  };
-
   return (
     <div className="calendar-container">
-      <Sidebar 
-        onGoalSelect={handleGoalSelect} 
+      <Sidebar
+        onGoalSelect={handleGoalSelect}
         selectedGoal={selectedGoal}
-        onTaskDragStart={handleTaskDragStart}
       />
       <div className="calendar-main">
         <div className="calendar-header">
@@ -100,23 +103,39 @@ const Calendar = () => {
           </div>
           <div className="calendar-controls">
             <button onClick={handleToday}>Today</button>
-            <button onClick={handlePrevWeek}>&lt;</button>
-            <button onClick={handleNextWeek}>&gt;</button>
+            <button onClick={handlePrev}>&lt;</button>
+            <button onClick={handleNext}>&gt;</button>
             <div className="view-controls">
-              <button className="active">Week</button>
-              <button>Month</button>
-              <button>Year</button>
+              <button onClick={() => setView('week')} className={view === 'week' ? 'active' : ''}>Week</button>
+              <button onClick={() => setView('month')} className={view === 'month' ? 'active' : ''}>Month</button>
+              <button onClick={() => setView('year')} className={view === 'year' ? 'active' : ''}>Year</button>
             </div>
           </div>
         </div>
-        <WeekView 
-          currentDate={currentDate}
-          onTimeSlotClick={handleTimeSlotClick}
-          onEventClick={handleEventClick}
-        />
+        {view === 'week' && (
+          <WeekView
+            currentDate={currentDate}
+            onTimeSlotClick={handleTimeSlotClick}
+            onEventClick={handleEventClick}
+          />
+        )}
+        {view === 'month' && (
+          <MonthView
+            currentDate={currentDate}
+            onTimeSlotClick={handleTimeSlotClick}
+            onEventClick={handleEventClick}
+          />
+        )}
+        {view === 'year' && (
+          <YearView
+            currentDate={currentDate}
+            onTimeSlotClick={handleTimeSlotClick}
+            onEventClick={handleEventClick}
+          />
+        )}
       </div>
       {showModal && (
-        <EventModal 
+        <EventModal
           show={showModal}
           onClose={handleCloseModal}
           event={selectedEvent}
