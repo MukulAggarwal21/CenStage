@@ -1,0 +1,96 @@
+
+.calendar-event {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 2px;
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 30px;
+  z-index: 1;
+  transition: all 0.2s ease;
+}
+
+.calendar-event:hover {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  z-index: 2;
+}
+
+.calendar-event.expanded {
+  z-index: 3;
+}
+
+.event-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.event-title {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.event-time {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.event-details {
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+}
+
+.event-category {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.3);
+  padding: 0.125rem 0.25rem;
+  border-radius: 4px;
+}
+
+.event-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.25rem;
+}
+
+.event-action {
+  background: transparent;
+  border: none;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.5;
+  cursor: pointer;
+  font-size: 0.75rem;
+  border-radius: 50%;
+}
+
+.event-action:hover {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.resize-handle {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  cursor: ns-resize;
+}
+
+.resize-handle:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+

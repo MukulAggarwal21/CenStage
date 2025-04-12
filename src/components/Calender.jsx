@@ -4,6 +4,7 @@ import { fetchGoals, fetchTasks, fetchEvents } from '../redux/actions';
 import Sidebar from './Sidebar';
 import WeekView from './WeekView';
 import EventModal from './EventModal';
+// import '../styles/Calendar.css';
 import '../styles/Calendar.css';
 
 const Calendar = () => {

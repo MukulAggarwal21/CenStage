@@ -1,0 +1,68 @@
+
+/* src/styles/Sidebar.css */
+.sidebar {
+  width: 250px;
+  background-color: #fff;
+  border-right: 1px solid #e0e0e0;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.sidebar-section {
+  margin-bottom: 2rem;
+}
+
+.sidebar-section h2 {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #757575;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.goals-list,
+.tasks-list {
+  list-style: none;
+}
+
+.goal-item,
+.task-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  margin: 0.25rem 0;
+  border-radius: 4px;
+  border-left: 3px solid;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.goal-item:hover,
+.task-item:hover {
+  background-color: #f5f5f5;
+}
+
+.goal-item.selected {
+  background-color: #e3f2fd;
+}
+
+.color-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.no-selection {
+  color: #9e9e9e;
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+.loading {
+  color: #9e9e9e;
+  margin-top: 0.5rem;
+}
+
